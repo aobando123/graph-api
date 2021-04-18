@@ -8,10 +8,11 @@ import 'express-async-errors';
 
 import BaseRouter from './routes';
 import logger from '@shared/Logger';
+import path from 'path';
 
 const app = express();
 const { BAD_REQUEST } = StatusCodes;
-
+const dirname = __dirname;
 
 
 /************************************************************************************
@@ -21,6 +22,7 @@ const { BAD_REQUEST } = StatusCodes;
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
+app.use(express.static('./dist/public'));
 
 // Show routes called in console during development
 if (process.env.NODE_ENV === 'development') {
@@ -32,8 +34,7 @@ if (process.env.NODE_ENV === 'production') {
     app.use(helmet());
 }
 
-// Add APIs
-app.use('/api', BaseRouter);
+app.use('/', BaseRouter);
 
 // Print API errors
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
