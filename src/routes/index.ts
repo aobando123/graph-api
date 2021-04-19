@@ -1,10 +1,12 @@
 import { Router } from "express";
 
-import { getShortest, getGraph } from "./map";
+import { getShortest, getGraph, getNode, getLongest } from "./map";
 
 // User-route
 const userRouter = Router();
 userRouter.get("/shortest/:start/:destiny", getShortest);
+// userRouter.get("/longest/:start/:destiny", getLongest);
+userRouter.get("/graph/:node", getNode);
 userRouter.get("/graph", getGraph);
 
 // Export the base-router
