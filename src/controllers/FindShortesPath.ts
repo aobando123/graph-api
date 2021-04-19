@@ -26,6 +26,7 @@ class Dijkstra {
           minVertex = i.nameOfVertex;
         }
       }
+      
       arrayWithVertex.push(minVertex);
       nextVertex = minVertex;
     }
@@ -58,6 +59,7 @@ class Dijkstra {
       }
       delete nodes[sortedVisitedByWeight[0]];
     }
+    
     const finishWeight: number = this.vertices[finish].weight;
     const arrayWithVertex: string[] = this.findPointsOfShortestWay(
       start,

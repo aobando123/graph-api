@@ -12,8 +12,11 @@ const getShortest = (req: Request, res: Response) => {
 
 const getGraph = (req: Request, res: Response) => {
   const graph = dijkstra.vertices;
-
-  return res.status(OK).json(graph);
+  const listGraph: unknown[] = [];
+  Object.entries(graph).forEach(([name, vertice]) => {
+    listGraph.push(vertice);
+  });
+  return res.status(OK).json(listGraph);
 };
 
 export { getShortest, getGraph };

@@ -68,7 +68,27 @@
           <div class="flex-grow-1">
             <canvas id="canvas" width=600 height=520></canvas>
           </div>
-          <div class="flex-shrink-0"><span class="text-primary">Alajuela - San Jose</span></div>
+          <div class="flex-shrink-0 px-4">
+            <span class="text-primary mb-3">Camino Mínimo</span>
+            <form>
+              <fieldset>
+                <legend class="mb-3">Seleccione las ubicaciones</legend>
+                <div class="mb-3">
+                  <label for="selectA" class="form-label">Inicio</label>
+                  <select id="selectA" class="form-select">
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="selectB" class="form-label">Final</label>
+                  <select id="selectB" class="form-select">
+                  </select>
+                </div>
+                <button type="button" id="buscarUbicaciones" class="btn btn-primary mb-3">Buscar</button>
+              </fieldset>
+            </form>
+            <span class="text-primary">Vertices: </span>
+            <pre id="json"></pre>
+          </div>
         </div>
       </div>
     </section>

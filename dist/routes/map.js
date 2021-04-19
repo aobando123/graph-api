@@ -15,6 +15,10 @@ const getShortest = (req, res) => {
 exports.getShortest = getShortest;
 const getGraph = (req, res) => {
     const graph = FindShortesPath_1.default.vertices;
-    return res.status(OK).json(graph);
+    const listGraph = [];
+    Object.entries(graph).forEach(([name, vertice]) => {
+        listGraph.push(vertice);
+    });
+    return res.status(OK).json(listGraph);
 };
 exports.getGraph = getGraph;
