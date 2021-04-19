@@ -3,6 +3,8 @@ var ctx = canvas.getContext('2d');
 var t = 1;
 var points = [];
 var globalV = [];
+var globalG = [];
+var globalC = [];
 ctx.lineCap = 'round';
 initMapCanvas();
 
@@ -71,7 +73,6 @@ function initMapCanvas() {
 }
 
 function calculateVerticesCanvas(graphData) {
-  // define the path to plot
   var vertices = [];
   graphData.forEach(box => {
     if (box.nodes) {
@@ -97,15 +98,12 @@ function calculateVerticesCanvas(graphData) {
       }
     })
   });
-  console.log(vertices);
-  drawVerticesCanvas(vertices, graphData)
+  drawCanvas(vertices, graphData)
 }
 
-function drawVerticesCanvas(vertices, graphData) {
-  // draw the complete line
+function drawCanvas(vertices, graphData) {
   ctx.lineWidth = 10;
   ctx.strokeStyle = 'white';
-  // tell canvas you are beginning a new path
   ctx.beginPath();
 
   vertices.forEach(vertice => {
@@ -113,17 +111,23 @@ function drawVerticesCanvas(vertices, graphData) {
     ctx.lineTo(vertice.x, vertice.y);
   });
 
-  // stroke the path
   ctx.stroke();
 
-  graphData.forEach(graph => {
+  if (globalV.length === 0) {
+    globalV = vertices;
+    globalG = graphData;
+  }
+
+  drawLocations();
+}
+
+function drawLocations() {
+  globalG.forEach(graph => {
     ctx.fillStyle = graph.color;
     ctx.fillRect(graph.x, graph.y, graph.w, graph.h);
     ctx.fillStyle = '#FFF';
     ctx.fillText(graph.name, graph.x + 20, graph.y + 30);
   });
-
-  globalV = vertices;
 }
 
 function calcWaypoints(vertices) {
@@ -146,6 +150,10 @@ function calcWaypoints(vertices) {
 }
 
 function initAnimation(optionA, optionB) {
+  if (t != 1) {
+    cleanCanvas();
+  };
+
   ctx.lineWidth = 5;
   ctx.strokeStyle = "#669df6";
 
@@ -184,13 +192,11 @@ function getCaminoVertices(vertices, camino) {
   return (caminoVertices.filter(camino => camino.x));
 }
 
-
-// calc waypoints traveling along vertices
-function calcWaypoints(vertices) {
+function calcWaypoints(verticesC) {
     var waypoints = [];
-    for (var i = 1; i < vertices.length; i++) {
-        var pt0 = vertices[i - 1];
-        var pt1 = vertices[i];
+    for (var i = 1; i < verticesC.length; i++) {
+        var pt0 = verticesC[i - 1];
+        var pt1 = verticesC[i];
         var dx = pt1.x - pt0.x;
         var dy = pt1.y - pt0.y;
         for (var j = 0; j < 100; j++) {
@@ -205,7 +211,6 @@ function calcWaypoints(vertices) {
     return (waypoints);
 }
 
-
 function animate() {
     if (t < points.length - 1) {
         requestAnimationFrame(animate);
@@ -217,6 +222,7 @@ function animate() {
     ctx.lineTo(points[t].x, points[t].y);
     ctx.stroke();
     // increment "t" to get the next waypoint
+    drawLocations();
     t++;
 }
 
@@ -235,10 +241,20 @@ function printOptionsMap(graph) {
   });
 }
 
+function cleanCanvas() {
+  t = 1;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drawCanvas(globalV, globalG);
+}
+
 $( "#buscarUbicaciones" ).click(function() {
   var optionA = $('#selectA').val();
   var optionB = $('#selectB').val();
   
   initAnimation(optionA, optionB);
+});
+
+$( "#limpiarMapa" ).click(function() {
+  cleanCanvas();
 });
 
