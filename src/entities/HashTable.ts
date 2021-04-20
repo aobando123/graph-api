@@ -5,9 +5,9 @@ interface HashValues<T> {
 }
 
 export default class HashTable<T> {
-  values: HashValues<T>;
-  size: number;
-  length: number;
+  private values: HashValues<T>;
+  private size: number;
+  private length: number;
   constructor(size: number) {
     this.values = {};
     this.length = 0;
@@ -51,5 +51,9 @@ export default class HashTable<T> {
     });
 
     return entries;
+  }
+
+  getLength() {
+    return this.length;
   }
 }

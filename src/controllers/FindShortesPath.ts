@@ -1,15 +1,15 @@
-import Dijkstra from "@entities/Dijkstra";
+import MapGraph from "@entities/MapGraph";
 import Vertex from "../entities/Vertex";
 
-class DijkstraController {
-  dijkstra: Dijkstra;
+class MapGraphController {
+  private mapGraph: MapGraph;
   constructor() {
-    this.dijkstra = new Dijkstra();
+    this.mapGraph = new MapGraph();
     this.init();
   }
 
   private init() {
-    this.dijkstra.addVertex(
+    this.mapGraph.addVertex(
       new Vertex(
         "San_Jose",
         [
@@ -25,7 +25,7 @@ class DijkstraController {
         1
       )
     );
-    this.dijkstra.addVertex(
+    this.mapGraph.addVertex(
       new Vertex(
         "Escazu",
         [
@@ -36,7 +36,7 @@ class DijkstraController {
         1
       )
     );
-    this.dijkstra.addVertex(
+    this.mapGraph.addVertex(
       new Vertex(
         "Desamparados",
         [
@@ -49,7 +49,7 @@ class DijkstraController {
         1
       )
     );
-    this.dijkstra.addVertex(
+    this.mapGraph.addVertex(
       new Vertex(
         "Puriscal",
         [
@@ -61,7 +61,7 @@ class DijkstraController {
         1
       )
     );
-    this.dijkstra.addVertex(
+    this.mapGraph.addVertex(
       new Vertex(
         "Tarrazu",
         [
@@ -72,7 +72,7 @@ class DijkstraController {
         1
       )
     );
-    this.dijkstra.addVertex(
+    this.mapGraph.addVertex(
       new Vertex(
         "Aserri",
         [
@@ -84,7 +84,7 @@ class DijkstraController {
         1
       )
     );
-    this.dijkstra.addVertex(
+    this.mapGraph.addVertex(
       new Vertex(
         "Mora",
         [
@@ -97,7 +97,7 @@ class DijkstraController {
         1
       )
     );
-    this.dijkstra.addVertex(
+    this.mapGraph.addVertex(
       new Vertex(
         "Goicoechea",
         [
@@ -110,7 +110,7 @@ class DijkstraController {
         1
       )
     );
-    this.dijkstra.addVertex(
+    this.mapGraph.addVertex(
       new Vertex(
         "Santa_Ana",
         [
@@ -122,7 +122,7 @@ class DijkstraController {
         1
       )
     );
-    this.dijkstra.addVertex(
+    this.mapGraph.addVertex(
       new Vertex(
         "Alajuelita",
         [
@@ -135,7 +135,7 @@ class DijkstraController {
         1
       )
     );
-    this.dijkstra.addVertex(
+    this.mapGraph.addVertex(
       new Vertex(
         "Vazquez_de_Coronado",
         [
@@ -145,7 +145,7 @@ class DijkstraController {
         1
       )
     );
-    this.dijkstra.addVertex(
+    this.mapGraph.addVertex(
       new Vertex(
         "Acosta",
         [
@@ -159,7 +159,7 @@ class DijkstraController {
         1
       )
     );
-    this.dijkstra.addVertex(
+    this.mapGraph.addVertex(
       new Vertex(
         "Tibas",
         [
@@ -170,7 +170,7 @@ class DijkstraController {
         1
       )
     );
-    this.dijkstra.addVertex(
+    this.mapGraph.addVertex(
       new Vertex(
         "Moravia",
         [
@@ -181,7 +181,7 @@ class DijkstraController {
         1
       )
     );
-    this.dijkstra.addVertex(
+    this.mapGraph.addVertex(
       new Vertex(
         "Montes_de_Oca",
         [
@@ -192,7 +192,7 @@ class DijkstraController {
         1
       )
     );
-    this.dijkstra.addVertex(
+    this.mapGraph.addVertex(
       new Vertex(
         "Turrubares",
         [
@@ -205,7 +205,7 @@ class DijkstraController {
         1
       )
     );
-    this.dijkstra.addVertex(
+    this.mapGraph.addVertex(
       new Vertex(
         "Dota",
         [
@@ -216,7 +216,7 @@ class DijkstraController {
         1
       )
     );
-    this.dijkstra.addVertex(
+    this.mapGraph.addVertex(
       new Vertex(
         "Curridabat",
         [
@@ -227,7 +227,7 @@ class DijkstraController {
         1
       )
     );
-    this.dijkstra.addVertex(
+    this.mapGraph.addVertex(
       new Vertex(
         "Perez_Zeledon",
         [
@@ -237,7 +237,7 @@ class DijkstraController {
         1
       )
     );
-    this.dijkstra.addVertex(
+    this.mapGraph.addVertex(
       new Vertex(
         "Leon_Cortes",
         [
@@ -248,7 +248,7 @@ class DijkstraController {
         1
       )
     );
-    this.dijkstra.addVertex(
+    this.mapGraph.addVertex(
       new Vertex(
         "Garabito",
         [
@@ -260,7 +260,7 @@ class DijkstraController {
         1
       )
     );
-    this.dijkstra.addVertex(
+    this.mapGraph.addVertex(
       new Vertex(
         "Parrita",
         [
@@ -272,7 +272,7 @@ class DijkstraController {
         1
       )
     );
-    this.dijkstra.addVertex(
+    this.mapGraph.addVertex(
       new Vertex(
         "Orotina",
         [
@@ -284,7 +284,7 @@ class DijkstraController {
         1
       )
     );
-    this.dijkstra.addVertex(
+    this.mapGraph.addVertex(
       new Vertex(
         "Esparza",
         [
@@ -294,7 +294,7 @@ class DijkstraController {
         1
       )
     );
-    this.dijkstra.addVertex(
+    this.mapGraph.addVertex(
       new Vertex(
         "Atenas",
         [
@@ -306,20 +306,20 @@ class DijkstraController {
     );
   }
 
-  findShortesPath(start: string, finish: string) {
-    return this.dijkstra.findShortestWay(start, finish);
+  getShortestPath(start: string, finish: string) {
+    return this.mapGraph.getShortestPath(start, finish);
   }
-  findLongestPath(start: string, finish: string) {
-    return this.dijkstra.findLongestWay(start, finish);
-  }
+  // findLongestPath(start: string, finish: string) {
+  //   return this.mapGraph.findLongestWay(start, finish);
+  // }
 
   getGraph() {
-    return this.dijkstra.getGraph();
+    return this.mapGraph.getGraph();
   }
   getNode(node: string) {
-    return this.dijkstra.getNode(node);
+    return this.mapGraph.getNode(node);
   }
 }
-const dijkstra = new DijkstraController();
+const mapGraphController = new MapGraphController();
 
-export default dijkstra;
+export default mapGraphController;

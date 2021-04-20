@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { getShortest, getGraph, getNode, getLongest } from "./map";
+import { getShortest, getGraph, getNode } from "./map";
 
 // User-route
 const userRouter = Router();

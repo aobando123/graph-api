@@ -1,14 +1,11 @@
 import HashTable from "./HashTable";
+import GraphPath from "./Path";
 import Vertex from "./Vertex";
 
 export default class Dijkstra {
-  vertices: HashTable<Vertex>;
-  constructor() {
-    this.vertices = new HashTable(25);
-  }
-
-  addVertex(vertex: Vertex): void {
-    this.vertices.put(vertex.name, vertex);
+  private vertices: HashTable<Vertex>;
+  constructor(vertices: HashTable<Vertex>) {
+    this.vertices = vertices;
   }
 
   private findPointsOfShortestWay(start: string, finish: string): string[] {
@@ -106,11 +103,7 @@ export default class Dijkstra {
       finish
     ).reverse();
     arrayWithVertex.push(finish);
-    const path = {
-      path: arrayWithVertex,
-      totalWeight: finishWeight.toString(),
-    };
-    return path;
+    return new GraphPath(arrayWithVertex, finishWeight.toString());
   }
 
   findLongestWay(start: string, finish: string) {
@@ -128,13 +121,5 @@ export default class Dijkstra {
       totalWeight: finishWeight.toString(),
     };
     return path;
-  }
-
-  getNode(node: string) {
-    return this.vertices.get(node);
-  }
-
-  getGraph() {
-    return this.vertices.getEntries();
   }
 }
