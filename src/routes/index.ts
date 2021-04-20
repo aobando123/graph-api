@@ -1,12 +1,13 @@
 import { Router } from "express";
-import { getShortest, getGraph } from "./map";
-import { index } from "./main";
 
-const router = Router();
+import { getShortest, getGraph, getNode } from "./map";
 
-// map api
-router.get("/map/shortest/:start/:destiny", getShortest);
-router.get("/map/graph", getGraph);
+// User-route
+const userRouter = Router();
+userRouter.get("/shortest/:start/:destiny", getShortest);
+// userRouter.get("/longest/:start/:destiny", getLongest);
+userRouter.get("/graph/:node", getNode);
+userRouter.get("/graph", getGraph);
 
 // index
 router.get("/", index);
