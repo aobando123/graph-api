@@ -5,68 +5,49 @@ var points = [];
 var globalV = [];
 var globalG = [];
 var globalC = [];
+var globalUbicacionA = false;
+var globalUbicacionB = false;
 ctx.lineCap = 'round';
 initMapCanvas();
 
 function initMapCanvas() {
-  var boxes = [];
-  boxes.push({
-    x: 46,
-    y: 169,
-    w: 50,
-    h: 50,
-    color: '#79f7c9',
-  }); // A
-  boxes.push({
-    x: 258,
-    y: 45,
-    w: 50,
-    h: 50,
-    color: '#4a9177',
-  }); // B
-  boxes.push({
-    x: 503,
-    y: 126,
-    w: 50,
-    h: 50,
-    color: '#0dd48b',
-  }); // C
-  boxes.push({
-    x: 279,
-    y: 252,
-    w: 50,
-    h: 50,
-    color: '#053825',
-  }); // D
-  boxes.push({
-    x: 92,
-    y: 370,
-    w: 50,
-    h: 50,
-    color: '#051710',
-  }); // E
-  boxes.push({
-    x: 472,
-    y: 365,
-    w: 50,
-    h: 50,
-    color: '#0f9944',
-  }); // F
-  boxes.push({
-    x: 234,
-    y: 450,
-    w: 50,
-    h: 50,
-    color: '#5ac784',
-  }); // G
+  var boxes = [
+    {x:31, y:204, w:70, h:30, name: 'Garabito'},
+    {x:204, y:41, w:70, h:30, name: 'Esparza'},
+    {x:409, y:82, w:70, h:30, name: 'Orotina'},
+    {x:298, y:229, w:70, h:30, name: 'Turrubares'},
+    {x:628, y:180, w:70, h:30, name: 'Atenas'},
+    {x:275, y:402, w:70, h:30, name: 'Puriscal'},
+    {x:482, y:348, w:70, h:30, name: 'Mora'},
+    {x:407, y:667, w:70, h:30, name: 'Acosta'},
+    {x:652, y:478, w:70, h:30, name: 'Santa_Ana'},
+    {x:51, y:567, w:70, h:30, name: 'Parrita'},
+    {x:828, y:734, w:70, h:30, name: 'Aserri'},
+    {x:937, y:550, w:70, h:30, name: 'Alajuelita'},
+    {x:855, y:398, w:70, h:30, name: 'Escazu'},
+    {x:1129, y:665, w:100, h:30, name: 'Desamparados'},
+    {x:1134, y:447, w:70, h:30, name: 'Curridabat'},
+    {x:1259, y:382, w:100, h:30, name: 'Montes_de_Oca'},
+    {x:1312, y:755, w:100, h:30, name: 'Leon_Cortes'},
+    {x:1091, y:45, w:70, h:30, name: 'Tibas'},
+    {x:1231, y:225, w:70, h:30, name: 'Goicoechea'},
+    {x:1405, y:96, w:70, h:30, name: 'Moravia'},
+    {x:1427, y:261, w:120, h:30, name: 'Vazquez_de_Coronado'},
+    {x:1426, y:613, w:50, h:30, name: 'Dota'},
+    {x:946, y:178, w:70, h:30, name: 'San_Jose'},
+    {x:1683, y:729, w:70, h:30, name: 'Tarrazu'},
+    {x:1769, y:583, w:100, h:30, name: 'Perez_Zeledon'},
+  ];
 
   $.ajax({
     method: "GET",
     url: "/map/graph",
   }).done(function( graphData ) {
-    for (let index = 0; index < graphData.length; index++) {
-      Object.assign(graphData[index], boxes[index]);
-    }
+    graphData.forEach(data => {
+      var boxV = boxes.find(box => box.name === data.name);
+      Object.assign(data, boxV);
+    });
+
     calculateVerticesCanvas(graphData);
     printOptionsMap(graphData);
   });
@@ -102,7 +83,7 @@ function calculateVerticesCanvas(graphData) {
 }
 
 function drawCanvas(vertices, graphData) {
-  ctx.lineWidth = 10;
+  ctx.lineWidth = 5;
   ctx.strokeStyle = 'white';
   ctx.beginPath();
 
@@ -123,10 +104,14 @@ function drawCanvas(vertices, graphData) {
 
 function drawLocations() {
   globalG.forEach(graph => {
-    ctx.fillStyle = graph.color;
+    if (globalUbicacionA == graph.name || globalUbicacionB == graph.name) {
+      ctx.fillStyle = '#ffaf57';
+    } else {
+      ctx.fillStyle = 'white';
+    }
     ctx.fillRect(graph.x, graph.y, graph.w, graph.h);
-    ctx.fillStyle = '#FFF';
-    ctx.fillText(graph.name, graph.x + 20, graph.y + 30);
+    ctx.fillStyle = '#000';
+    ctx.fillText(graph.name, graph.x + 10, graph.y + 20);
   });
 }
 
@@ -153,20 +138,42 @@ function initAnimation(optionA, optionB) {
   if (t != 1) {
     cleanCanvas();
   };
-
-  ctx.lineWidth = 5;
-  ctx.strokeStyle = "#669df6";
+  globalUbicacionA = optionA;
+  globalUbicacionB = optionB;
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = "#ffaf57";
 
   $.ajax({
     method: "GET",
     url: `/map/shortest/${optionA}/${optionB}`,
   }).done(function( caminoData ) {
-    var caminoVertices = getCaminoVertices(globalV, caminoData);
+    var caminoVertices = getCaminoVertices(globalV, caminoData.path);
     points = calcWaypoints(caminoVertices);
-    console.log(caminoVertices);
-    document.getElementById("json").innerHTML = JSON.stringify(caminoData, undefined, 2);
+    $('#pesoTexto').css("display", "inline");
+    $('#peso').text(caminoData.totalWeigth);
     animate();
   });
+}
+
+function initAnimationBuscar(option) {
+  if (t != 1) {
+    cleanCanvas();
+  };
+  globalUbicacionA = option;
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = "#ffaf57";
+
+  var caminoVertices = [];
+  var init = globalV.find(vertice => vertice.node === option);
+  caminoVertices.push({x: init.nodeX, y: init.nodeY});
+  globalV.forEach(vertice => {
+    if (vertice.node === option) {
+      caminoVertices.push(vertice);
+      caminoVertices.push({x: init.nodeX, y: init.nodeY});
+    }
+  });
+  points = calcWaypoints(caminoVertices);
+  animate();
 }
 
 function getCaminoVertices(vertices, camino) {
@@ -215,13 +222,11 @@ function animate() {
     if (t < points.length - 1) {
         requestAnimationFrame(animate);
     }
-    // draw a line segment from the last waypoint
-    // to the current waypoint
+
     ctx.beginPath();
     ctx.moveTo(points[t - 1].x, points[t - 1].y);
     ctx.lineTo(points[t].x, points[t].y);
     ctx.stroke();
-    // increment "t" to get the next waypoint
     drawLocations();
     t++;
 }
@@ -229,20 +234,29 @@ function animate() {
 function printOptionsMap(graph) {
   var selectA = document.getElementById("selectA");
   var selectB = document.getElementById("selectB");
+  var ubicacion = document.getElementById("ubicacion");
   graph.forEach(vertice => {
     var optionA = document.createElement("option");
     var optionB = document.createElement("option");
+    var ubicacionOption = document.createElement("option");
     optionA.text = vertice.name;
     optionA.value = vertice.name;
     optionB.text = vertice.name;
     optionB.value = vertice.name;
-    selectA.add(optionA);
-    selectB.add(optionB);
+    ubicacionOption.text = vertice.name;
+    ubicacionOption.value = vertice.name;
+    ubicacion.add(ubicacionOption);
+    if (selectA && selectB) {
+      selectA.add(optionA);
+      selectB.add(optionB);
+    }
   });
 }
 
 function cleanCanvas() {
   t = 1;
+  globalUbicacion = false;
+  globalUbicacionB = false;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawCanvas(globalV, globalG);
 }
@@ -254,7 +268,12 @@ $( "#buscarUbicaciones" ).click(function() {
   initAnimation(optionA, optionB);
 });
 
+$( "#buscarUbicacion" ).click(function() {
+  var option = $('#ubicacion').val();
+  
+  initAnimationBuscar(option);
+});
+
 $( "#limpiarMapa" ).click(function() {
   cleanCanvas();
 });
-

@@ -1,0 +1,16 @@
+[
+	{x:31, y:204, name: 'Garabito'},
+	{x:204, y:41, name: 'Esparza'},
+	{x:409, y:82, name: 'Orotina'},
+	{x:298, y:229, name: 'Turrubares'},
+	{x:568, y:220, name: 'Atenas'},
+	{x:225, y:402, name: 'Puriscal'},
+	{x:482, y:448, name: 'Mora'},
+	{x:407, y:667, name: 'Acosta'},
+	{x:652, y:578, name: 'Santa Ana'},
+	{x:141, y:567, name: 'Parrita'},
+	{x:828, y:734, name: 'Aserri'},
+	{x:937, y:550, name: 'Alajuelita'},
+	{x:855, y:398, name: 'Escazu'},
+	{x:946, y:178, name: 'Sanjose'},
+]

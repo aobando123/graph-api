@@ -1,14 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const map_1 = require("./map");
 const main_1 = require("./main");
-const router = express_1.Router();
-// map api
-router.get("/map/shortest/:start/:destiny", map_1.getShortest);
-router.get("/map/graph", map_1.getGraph);
+const map_1 = require("./map");
+// User-route
+const userRouter = express_1.Router();
+userRouter.get("/map/shortest/:start/:destiny", map_1.getShortest);
+// userRouter.get("/longest/:start/:destiny", getLongest);
+userRouter.get("/map/graph/:node", map_1.getNode);
+userRouter.get("/map/graph", map_1.getGraph);
 // index
-router.get("/", main_1.index);
+userRouter.get("/", main_1.index);
 const baseRouter = express_1.Router();
-baseRouter.use("/", router);
+baseRouter.use("/", userRouter);
 exports.default = baseRouter;

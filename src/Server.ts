@@ -8,11 +8,9 @@ import 'express-async-errors';
 
 import BaseRouter from './routes';
 import logger from '@shared/Logger';
-import path from 'path';
 
 const app = express();
 const { BAD_REQUEST } = StatusCodes;
-const dirname = __dirname;
 
 
 /************************************************************************************
