@@ -200,7 +200,7 @@ class MapGraphController {
           { nameOfVertex: "Puriscal", weight: 22.7 },
           { nameOfVertex: "Garabito", weight: 48.9 },
           { nameOfVertex: "Parrita", weight: 104.8 },
-          { nameOfVertex: "Turrubares", weight: 21 },
+          { nameOfVertex: "Orotina", weight: 21 },
         ],
         1
       )

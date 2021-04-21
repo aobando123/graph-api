@@ -1,15 +1,16 @@
 import { Router } from "express";
-
+import { index } from "./main";
 import { getShortest, getGraph, getNode } from "./map";
 
 // User-route
 const userRouter = Router();
-userRouter.get("/shortest/:start/:destiny", getShortest);
+userRouter.get("/map/shortest/:start/:destiny", getShortest);
 // userRouter.get("/longest/:start/:destiny", getLongest);
-userRouter.get("/graph/:node", getNode);
-userRouter.get("/graph", getGraph);
+userRouter.get("/map/graph/:node", getNode);
+userRouter.get("/map/graph", getGraph);
+// index
+userRouter.get("/", index);
 
-// Export the base-router
 const baseRouter = Router();
-baseRouter.use("/map", userRouter);
+baseRouter.use("/", userRouter);
 export default baseRouter;
