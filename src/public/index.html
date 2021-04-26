@@ -53,48 +53,75 @@
   </div>
   <div class="canvas-bg">
     <div class="canvas-options">
-      <div class="row g-3 align-items-center">
+      <div class="row">
         <div class="col-auto">
-          <p class="lead mb-3">Ubicacion y adyacentes</p>
+          <div class="row g-3 align-items-center">
+            <div class="col-auto">
+              <p class="lead mb-3">Ubicacion y adyacentes</p>
+            </div>
+          </div>
+          <div class="row g-3 align-items-center mb-3">
+            <div class="col-auto">
+              <label for="ubicacion" class="col-form-label">Seleccione ubicación: </label>
+            </div>
+            <div class="col-auto">
+              <select id="ubicacion" class="form-select">
+              </select>
+            </div>
+            <div class="col-auto">
+              <button type="button" id="buscarUbicacion" class="btn btn-primary">Buscar</button>
+            </div>
+          </div>
+          <div class="row g-3 align-items-center">
+            <div class="col-auto">
+              <p class="lead mb-3">Camino Mínimo</p>
+            </div>
+          </div>
+          <div class="row g-3 align-items-center">
+            <div class="col-auto">
+              <label for="selectA" class="col-form-label">Seleccione Inicio: </label>
+            </div>
+            <div class="col-auto">
+              <select id="selectA" class="form-select">
+              </select>
+            </div>
+            <div class="col-auto">
+              <label for="selectB" class="col-form-label">Seleccione Destino: </label>
+            </div>
+            <div class="col-auto">
+              <select id="selectB" class="form-select">
+              </select>
+            </div>
+            <div class="col-auto">
+              <button type="button" id="buscarUbicaciones" class="btn btn-primary">Buscar</button>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="row g-3 align-items-center mb-3">
         <div class="col-auto">
-          <label for="ubicacion" class="col-form-label">Seleccione ubicación: </label>
-        </div>
-        <div class="col-auto">
-          <select id="ubicacion" class="form-select">
-          </select>
-        </div>
-        <div class="col-auto">
-          <button type="button" id="buscarUbicacion" class="btn btn-primary">Buscar</button>
-        </div>
-      </div>
-      <div class="row g-3 align-items-center">
-        <div class="col-auto">
-          <p class="lead mb-3">Camino Minimo</p>
-        </div>
-      </div>
-      <div class="row g-3 align-items-center">
-        <div class="col-auto">
-          <label for="selectA" class="col-form-label">Seleccione Inicio: </label>
-        </div>
-        <div class="col-auto">
-          <select id="selectA" class="form-select">
-          </select>
-        </div>
-        <div class="col-auto">
-          <label for="selectB" class="col-form-label">Seleccione Destino: </label>
-        </div>
-        <div class="col-auto">
-          <select id="selectB" class="form-select">
-          </select>
-        </div>
-        <div class="col-auto">
-          <button type="button" id="buscarUbicaciones" class="btn btn-primary">Buscar</button>
-        </div>
-        <div class="col-auto">
-          <p id="pesoTexto" style="display: none;">El costo/distancia del camino es de: <span id="peso"></span></p>
+          <div style="display: none;" id="pesoTexto">
+            <div class="row g-3 align-items-center">
+              <div class="col-auto">
+                <p class="lead mb-3">Costo/distancia del camino</p>
+              </div>
+            </div>
+            <div class="row g-3 align-items-center mb-3">
+              <div class="col-auto">
+                <p>Ruta: </p>
+                <ul id="ruta">
+                </ul>
+              </div>
+              <div class="col-auto">
+                <p>Distancia: </p>
+                <ul id="pesoRuta">
+                </ul>
+              </div>
+            </div>
+            <div class="row g-3 align-items-center">
+              <div class="col-auto">
+                <p id="pesoTotal"></p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

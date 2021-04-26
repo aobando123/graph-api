@@ -7,6 +7,11 @@ var globalG = [];
 var globalC = [];
 var globalUbicacionA = false;
 var globalUbicacionB = false;
+var rutaElem = document.getElementById("ruta");
+var pesoElem = document.getElementById("pesoRuta");
+var listItem = null;
+var listItemW = null;
+
 ctx.lineCap = 'round';
 initMapCanvas();
 
@@ -148,9 +153,15 @@ function initAnimation(optionA, optionB) {
     url: `/map/shortest/${optionA}/${optionB}`,
   }).done(function( caminoData ) {
     var caminoVertices = getCaminoVertices(globalV, caminoData.path);
+    console.log(caminoVertices);
     points = calcWaypoints(caminoVertices);
-    $('#pesoTexto').css("display", "inline");
-    $('#peso').text(caminoData.totalWeigth);
+    $('#pesoTexto').css("display", "block");
+    $('#pesoTotal').text("Total : "+caminoData.totalWeigth+"km");
+
+    caminoVertices.forEach(vertice => {
+      if (vertice.weight) { addListItem(vertice); }
+    });
+
     animate();
   });
 }
@@ -162,18 +173,30 @@ function initAnimationBuscar(option) {
   globalUbicacionA = option;
   ctx.lineWidth = 3;
   ctx.strokeStyle = "#ffaf57";
+  $('#pesoTexto').css("display", "block");
 
   var caminoVertices = [];
   var init = globalV.find(vertice => vertice.node === option);
   caminoVertices.push({x: init.nodeX, y: init.nodeY});
+
   globalV.forEach(vertice => {
     if (vertice.node === option) {
+      addListItem(vertice);
       caminoVertices.push(vertice);
       caminoVertices.push({x: init.nodeX, y: init.nodeY});
     }
   });
   points = calcWaypoints(caminoVertices);
   animate();
+}
+
+function addListItem(vertice) {
+  listItem = document.createElement("li");
+  listItemW = document.createElement("li");
+  listItem.appendChild(document.createTextNode(vertice.name));
+  listItemW.appendChild(document.createTextNode(vertice.weight + "km"));
+  rutaElem.appendChild(listItem);
+  pesoElem.appendChild(listItemW);
 }
 
 function getCaminoVertices(vertices, camino) {
@@ -193,6 +216,7 @@ function getCaminoVertices(vertices, camino) {
     if (pathVertice) {
       path.x = pathVertice.x;
       path.y = pathVertice.y;
+      path.weight = pathVertice.weight;
     }
   });
   caminoVertices.unshift(caminoInit);
@@ -255,6 +279,9 @@ function printOptionsMap(graph) {
 
 function cleanCanvas() {
   t = 1;
+  $('#ruta').empty();
+  $('#pesoRuta').empty();
+  $('#pesoTotal').empty();
   globalUbicacion = false;
   globalUbicacionB = false;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
